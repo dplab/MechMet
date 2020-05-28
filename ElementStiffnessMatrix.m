@@ -1,0 +1,1 @@
+function se = ElementStiffnessMatrix(nnpe,nqptv,wtq,bigB,detj,r)% forms elemental stiffness matrix iend=3*nnpe;se = zeros(iend,iend);                                       for   k=1:1:nqptv       bigBqp = bigB(:,:,k);                                      xkfac(k)=wtq(k)*detj(k);      se = se + xkfac(k)*(bigBqp' * r * bigBqp);      end
