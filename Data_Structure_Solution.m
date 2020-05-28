@@ -1,0 +1,6 @@
+function  solutionfile    = Data_Structure_Solution(u,sigma_ave,epsilon_ave,sigma,epsilon,rse,schmidfactors,embeddedstiffness,SXStiffness,re2sx,rse_ave,schmidfactors_ave,embeddedstiffness_ave,SXStiffness_ave,re2sx_ave)
+                           
+%
+solutionfile = struct('u',u,'sigma_ave',sigma_ave,'epsilon_ave',epsilon_ave,'sigma',sigma,'epsilon',epsilon,...
+    'rse',rse,'schmidfactors',schmidfactors,'SXStiffness',SXStiffness,'embeddedstiffness',embeddedstiffness,'re2sx',re2sx, ...
+    'rse_ave',rse_ave,'schmidfactors_ave',schmidfactors_ave,'SXStiffness_ave',SXStiffness_ave,'embeddedstiffness_ave',embeddedstiffness_ave,'re2sx_ave',re2sx_ave);

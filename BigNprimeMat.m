@@ -1,0 +1,1 @@
+function bigNprime = BigNprimeMat(nnpe,nqptv,dndx,dndy,dndz)% compute the bigB matrix for stiffness matrices used in L_2 projectionbigNprime = zeros(3,nnpe,nqptv);for i=1:1:nqptv        for j=1:1:nnpe             bigNprime(1,j,i) = dndx(j,i);      bigNprime(2,j,i) = dndy(j,i);      bigNprime(3,j,i) = dndz(j,i);  end   end 
