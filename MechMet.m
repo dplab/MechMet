@@ -694,7 +694,7 @@ inverse_rmatrix = grain_inverse_rmatrix(:,:,igrain);
        case 3   
         embeddedstiffness_ave(iele) = sigma_average(3)/elepsilon(3);
         SXStiffness_ave(iele) = 1./inverse_rmatrix(3,3);
-        re2sx_ave(iele) = embeddedstiffness_ave(iele)/SXStiffness(iele);
+        re2sx_ave(iele) = embeddedstiffness_ave(iele)/SXStiffness_ave(iele);
        case 4
         embeddedstiffness_ave(iele) = (sigma_average(1)/elepsilon(1)+sigma_average(2)/elepsilon(2))/2.; 
 %        re2sx_ave(iele) = embeddedstiffness(inp)/rotated_rmatrix(1,1);
