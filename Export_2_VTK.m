@@ -163,6 +163,8 @@ fprintf(f, '%e\n', solutionfile.rse_ave(:));
 quaterions  = QuatOfRMat(microstructurefile.rotations);
 if(crystal_type==3)
     csym = CubSymmetries;
+elseif(crystal_type==4)
+    csym = CubSymmetries;
 elseif(crystal_type==6)
     csym = HexSymmetries;
 end
