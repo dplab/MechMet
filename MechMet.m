@@ -102,15 +102,21 @@ nnpe = shafac_structure.nnpe;
 % Slip system strengths:
 %    For FCC, enter the strength of the slip systems (one value
 %    for all) and slip system type (1 for fcc; 2 for bcc).
+%    For BCC, enter 4 values: Strength of {110}, {112}, {123} 
+%    and {134} slip planes.
 %    For HCP, enter 4 values:  Strength of basal, strength of prismatic,
 %    strength of pyramidal, and c over a ratio of the unit cell.
 %
 %   maxss should be increased if more that 18 slip systems are used for any
 %   phase  (currently the number for hexagonal crystal type)
-%   12 ss are used for cubics; slip systems 13-18 are zeros.
+%   12 ss are used for cubics; slip systems 13-18 are zeros. 
+
+%   Update: maxss was increased due to the 72 unique slip systems for BCC metals
+%   when considering different slip strength on
+%   12 {110}, 12 {112}, 24 {123}, 24 {134} systems.
 
 nphases = max(phases);
-maxss = 18;
+maxss = 72;
 crytal_type_all = zeros(1,nphases);
 r_matrix_all = zeros(6,6,nphases);
 sss_all = zeros(maxss,nphases);
