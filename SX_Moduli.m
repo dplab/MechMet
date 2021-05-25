@@ -1,4 +1,4 @@
-function [crystal_type,r_crystal,sss,sssr,covera] =   SX_Moduli(sx_filename)
+function [crystal_type,r_crystal,sss,sssr,covera] =   SX_Moduli(sx_filename,maxss)
 % read in single crystal constants and return the material stiffness 
 %  matrix in crystal reference frame
 %   input:  crystal type and moduli as designated below
@@ -21,6 +21,11 @@ function [crystal_type,r_crystal,sss,sssr,covera] =   SX_Moduli(sx_filename)
 %    For HCP, enter 4 values:  Strength of basal, strength of prismatic,
 %    strength of pyramidal, and c over a ratio of the unit cell.
 
+sss  = ones(1,maxss);
+sssr = ones(1,maxss);
+ssst = ones(1,maxss);
+
+
 modulifile = [sx_filename,'.matl'];
 fid = fopen(modulifile,'r');
     
@@ -42,8 +47,7 @@ r_crystal =  [c11 c12 c12  0    0    0; ...
           
 
 ssval = fscanf(fid, '%f %f', 2);
-ssst = [
-    ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ... 
+ssst(1:12) = [
     ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ... 
     ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) 
     ];
@@ -67,7 +71,7 @@ r_crystal =  [c11 c12 c12  0    0    0; ...
           
 
 ssval = fscanf(fid, '%f %f %f %f %f', 5);
-ssst = [
+ssst(1:72) = [
     ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ... 
     ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ssval(1) ... 
     ssval(2) ssval(2) ssval(2) ssval(2) ssval(2) ssval(2) ...
@@ -104,7 +108,7 @@ r_crystal =  [c11 c12 c13  0    0    0; ...
               
                         
 ssval = fscanf(fid, '%f %f %f %f', 4);
-ssst = [ssval(1) ssval(1) ssval(1) ssval(2) ssval(2) ssval(2) ...
+ssst(1:18) = [ssval(1) ssval(1) ssval(1) ssval(2) ssval(2) ssval(2) ...
     ssval(3) ssval(3) ssval(3) ssval(3) ssval(3) ssval(3) ...
     ssval(3) ssval(3) ssval(3) ssval(3) ssval(3) ssval(3)
     ];
