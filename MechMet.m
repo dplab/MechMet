@@ -135,7 +135,7 @@ sx_filename = input('Base name of single-crystal material file (with extension .
 %
 %evaulate the single crystal stiffness and slip system strengthl
 %                                                    
-[crystal_type,r_matrix,sss,sssr,covera] =   SX_Moduli(sx_filename);
+[crystal_type,r_matrix,sss,sssr,covera] =   SX_Moduli(sx_filename,maxss);
 
 crystal_type_all(iphase) = crystal_type;
 r_matrix_all(:,:,iphase) = r_matrix(:,:);
