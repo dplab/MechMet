@@ -32,7 +32,7 @@ ngrn  = tmp(2);
 %
 %  * grain and phase data
 %
-tmp = fscanf(f,'%d %d', [2 numel]);
+tmp = fscanf(f,'%d %d', [2 numel]);f
 g = tmp(1, :);
 p = tmp(2, :);
 fclose(f);
