@@ -94,7 +94,7 @@ for iele=1:1:tmp_numel
         if(phase_count==1)
             grains(2,icount) = 1;
         else
-            grains(2,icount) = tmp_phase(grainnum,2);
+            grains(2,icount) = tmp_phase(2,grainnum);
         end
         icount = icount+1;
     end  
