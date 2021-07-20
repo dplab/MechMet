@@ -22,10 +22,10 @@ function [meshfile,microstructurefile] = ReadNeperMshFile(fname)
 %   * Currently, connectivity is returned in fepx order
 %
 
-NodeFlag = '$Nodes'
-ElementFlag = '$Elements'
-OrientationFlag = '$ElsetOrientations'
-GroupFlag = '$Groups'
+NodeFlag = '$Nodes';
+ElementFlag = '$Elements';
+OrientationFlag = '$ElsetOrientations';
+GroupFlag = '$Groups';
 
 element_count=0;
 phase_count = 1;
@@ -38,7 +38,7 @@ while ~feof(fid)
     tstring = convertCharsToStrings(tline);
  %
     if(tstring== NodeFlag)
-       numnp = str2num(fgetl(fid)) 
+       numnp = str2num(fgetl(fid)) ;
        crd= zeros(3,numnp);
        tmp_coords = fscanf(fid, '%d %f %f %f', 4*numnp);
        tmp_coords = reshape(tmp_coords, [4, numnp]);
@@ -47,7 +47,7 @@ while ~feof(fid)
     end
  %
     if(tstring== ElementFlag) 
-       tmp_numel = str2num(fgetl(fid)) 
+       tmp_numel = str2num(fgetl(fid)) ;
        tmp_np= zeros(10,tmp_numel);
        tmp_grains = zeros(1,tmp_numel);
        for iele = 1:1:tmp_numel
