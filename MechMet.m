@@ -292,7 +292,7 @@ nomdisplacement = nominalstrain*lenxyz;
 Eeff= nominalstrain;
 %
 
-[bccode,bcvalue,nomstress] = SetBCs(meshfile,loadcode,nomdisplacement);
+[bccode,bcvalue,nomstress] = SetBCs(meshfile,loadcode,nomdisplacement,neperversionnumber);
 
 %
 % Apply boundary conditions
