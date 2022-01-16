@@ -1,4 +1,4 @@
-function [bccode,bcvalue,nomstress] = SetBCs(m,loadcode,nomstrain,varargin)
+function [bccode,bcvalue,nomstress] = SetBCs(m,loadcode,nomstrain,neperversionnumber,varargin)
 % SetBCs - Write boundary conditions based on loadcode parameter
 %
 %   INPUT:
@@ -93,7 +93,12 @@ CODE = 1; VAL = 2;
 %
 surfopts = {'minx', 1, 'miny', 1, 'minz', 1, 'maxx', 1, 'maxy', 1, 'maxz', 1};
 
+if(neperversionnumber==3)
 surfs = RectMeshSurfaces(m, surfopts{:});
+else
+surfs = NeperMeshSurfaces((m, surfopts{:});
+end
+
 surfspecs = struct('name',   {'minx',   'miny',   'minz',   'maxx',   'maxy',   'maxz'},  ...
 		   'bcname', {'BCXMin', 'BCYMin', 'BCZMin', 'BCXMax', 'BCYMax', 'BCZMax'} ...
 		   );  % to be continued ...2006-02-28  16:18
