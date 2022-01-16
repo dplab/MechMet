@@ -72,7 +72,7 @@ while ~feof(fid)
           
        tmp_ori1 = fscanf(fid, '%d', 1);
        tmp_ori2 = fgetl(fid);
-       numori = tmp_ori1
+       numori = tmp_ori1;
        orientations= zeros(3,numori);
        tmp_oris = fscanf(fid, '%d %f %f %f', 4*numori);
        tmp_oris = reshape(tmp_oris, [4, numori]);
