@@ -15,4 +15,4 @@ function microstructurefile = MicrostructureStructure(phases,grains,orientations
 %        
 %
 
-microstructurefile = struct('phases',phases,'grains',grains,'orientations',orientations,'rotations',rotations)
+microstructurefile = struct('phases',phases,'grains',grains,'orientations',orientations,'rotations',rotations);
