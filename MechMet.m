@@ -72,17 +72,15 @@ numnp = n;
 numel = n;
 
 np = meshfile.con';
-coords = meshfile.crd;
-
 
 
 %
 %define local variables for coordinates
 %
 
-x = coords(1,:)';
-y = coords(2,:)';
-z = coords(3,:)';
+x = meshfile.crd(1,:)';
+y = meshfile.crd(2,:)';
+z = meshfile.crd(3,:)';
 
 %
 %  set up reference array that gives phase of each grain
@@ -279,9 +277,6 @@ status = ' Finished Assembly '
 
 status = ' Starting Displacement Solution'
 
-
-u = zeros(numeq,1);
-
 % 
 % Set up the boundary condition arrays for the specified loading mode
 %
@@ -304,6 +299,10 @@ Eeff= nominalstrain;
 % 
   [sk,f] = BCSparse(bccode,bcvalue,sk,f);    
 % 
+clear x y z;
+clear np;
+clear grains phases orientations;
+clear bccode bcvalue;
 %
   u=full(sk\f);
 %
@@ -329,6 +328,7 @@ status = ' Finished Displacement Solution  --  Starting Post-Processing'
 %
 grain_volumes = zeros(1,ngrains);
 grain_numels = zeros(1,ngrains);
+grains = microstructurefile.grains;
 
 for   iele =1:1:numel
          
@@ -354,6 +354,16 @@ epsilon_average = zeros(6,1);
 sigmaxs = zeros(6,1);
 sigmins = zeros(6,1);
 sigrangeqp = zeros(numel,1);
+
+x = meshfile.crd(1,:)';
+y = meshfile.crd(2,:)';
+z = meshfile.crd(3,:)';
+np = meshfile.con';
+
+phases = microstructurefile.phases;
+grains = microstructurefile.grains;
+rotations = microstructurefile.rotations;
+orientations = microstructurefile.orientations;
 
 for   iele =1:1:numel
          
@@ -407,23 +417,16 @@ sigma_average = sigma_average/sample_volume;
 
 status = ' Re-numbering mesh for grain-by-grain stress and strain continuity. '
 
-
+coords = meshfile.crd;
 
 [newnumnp,newnp,newnpinv,newcoords,old2new,grain4np,meshfilegbg]=GrainByGrainMesh(numel,numnp,np,nnpe,coords,grains);
-
-
 
 %
 %
 % Compute the elemental Consistent Penalty RHS and LHS arrays
 %
-% Average at nodal points
-%
-
-
 
 status = ' Starting Element-by-Element collocation of stress and strain, followed by averaging at nodes'
-
 
 
 damping_factors = zeros(numel,1);
@@ -443,21 +446,16 @@ ynew = newcoords(2,:)';
 znew = newcoords(3,:)';
 
 for   iele =1:1:numel
-    
-    
-  sigmanp = zeros(6,nnpe);
-  epsilonnp = zeros(6,nnpe);
-  
-
-    
+       
+sigmanp = zeros(6,nnpe);
+epsilonnp = zeros(6,nnpe);
+     
 dampflag = 0;
 damp_iter =0;
 
-
-
 while (dampflag ==0)
     
- damp_iter = damp_iter+1;
+  damp_iter = damp_iter+1;
       
   igrain = grains(iele);
   dampfac = damping_factors(iele);
@@ -468,10 +466,8 @@ while (dampflag ==0)
 
   bigNprime = BigNprimeMat(nnpe,nqptv,dndx,dndy,dndz);
   
-  
   me = ElementLHS4ConPen(nnpe,nqptv,wtqp,bigN,bigNprime,detj,dampfac);
-
-    
+   
     for ifield = 1:1:numfields
     
        switch ifield
@@ -533,8 +529,6 @@ while (dampflag ==0)
 
           epsilonnp(6,:) = phi(:,12);
 
-
-
 sigelnp = zeros(nnpe,1);
 
     for jnp = 1:1:nnpe
@@ -553,39 +547,29 @@ sigelnp = zeros(nnpe,1);
      dampflag = 1;
    end
  
- if(damp_iter > 20)
+  if(damp_iter > 20)
      dampflag = 1;
- end
+  end
 
-%
 end
 
-for jnp = 1:1:nnpe
+ for jnp = 1:1:nnpe
     j1 = newnp(iele,jnp);
     sigmanpave(:,j1) = sigmanpave(:,j1)+sigmanp(:,jnp);
     epsilonnpave(:,j1) = epsilonnpave(:,j1)+epsilonnp(:,jnp);
     numelepernp(j1) = numelepernp(j1)+1;
-end
+ end
     
-
-
 end
 
     for inp = 1:1:newnumnp
-    sigmanpave(:,inp) = sigmanpave(:,inp)./numelepernp(inp);
-    epsilonnpave(:,inp) = epsilonnpave(:,inp)./numelepernp(inp);
+      sigmanpave(:,inp) = sigmanpave(:,inp)./numelepernp(inp);
+      epsilonnpave(:,inp) = epsilonnpave(:,inp)./numelepernp(inp);
     end
-
-
 
     status = ' Finished stress smoothing routine ' 
     
-
-   
-
 %    next compute metrics related to stiffness (, ...)
-
-
 
     status = ' Starting calculation of stiffness-related metrics ' 
 
@@ -653,14 +637,10 @@ grain_schmidfactors = zeros(1,ngrains);
 %
 %   now compute the strength-related metrics
 %
-
-
-
     status = ' Starting calculation of (stiffness+strength)-related metrics ' 
 
 for   inp =1:1:newnumnp
          
-    
 igrain = grain4np(inp);
 schmid_tensor = schmid_tensors(:,:,igrain);
     
@@ -685,8 +665,7 @@ schmidfactors(inp) = schmidfactor;
 %the next line redefines the schmidfactor over and over again, but they are
 %all the same
 grain_schmidfactors(igrain) = schmidfactor;
- 
- 
+  
 end
 
 % repeat the computation of metrics for the element-averaged stress and
@@ -775,6 +754,7 @@ solutionfilegbg    = Data_Structure_Solution(ugbg,sigma_ave,epsilon_ave,sigmanpa
 graindatafile   = Data_Structure_GrainData(grain_volumes,rotations,grain_schmidfactors);
 
 basenamegbg = input('Base name of grain-by-grain output VTK file: ', 's');
+casename = input('Case name appended to output files: ', 's');
 
 SUF = 'vtk';
 
@@ -783,6 +763,8 @@ fileVTKgbg = fopen(sprintf('%s.%s', [basenamegbg], SUF), 'w');
 Export_2_VTK(fileVTKgbg, crystal_type, microstructurefile, meshfilegbg, solutionfilegbg,graindatafile,grain4np)
 
 status = ' Finished writing output to VTK file'
+
+save([basenamegbg '_' casename '.mat'], 'solutionfilegbg' );
 
 
 ReturnStatus = 'Simulation Completed';
