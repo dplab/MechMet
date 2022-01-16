@@ -96,7 +96,7 @@ surfopts = {'minx', 1, 'miny', 1, 'minz', 1, 'maxx', 1, 'maxy', 1, 'maxz', 1};
 if(neperversionnumber==3)
 surfs = RectMeshSurfaces(m, surfopts{:});
 else
-surfs = NeperMeshSurfaces((m, surfopts{:});
+surfs = NeperMeshSurfaces(m, surfopts{:});
 end
 
 surfspecs = struct('name',   {'minx',   'miny',   'minz',   'maxx',   'maxy',   'maxz'},  ...
