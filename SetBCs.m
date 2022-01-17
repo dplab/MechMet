@@ -80,7 +80,7 @@ options = OptArgs(optcell, varargin);
 %
 %-------------------- *
 %
-if nargin < 3
+if nargin < 4
   error(sprintf('Not enough args:\nUsage:  %s', Usage))
 end
 %
