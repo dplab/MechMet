@@ -304,10 +304,14 @@ clear np;
 clear grains phases orientations;
 clear bccode bcvalue;
 %
-  u=full(sk\f);
+  usparse = (sk\f);
 %
 clear sk;
 clear f;
+%
+  u = full(usparse);
+%
+clear usparse;
 %
 %remove tiny displacements caused by blasting  (cosmetic)
 %
