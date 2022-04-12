@@ -1,0 +1,1 @@
+function   bigNsurf = BigNSmat(nnps,nqpts,ssfac)% compute bigNsurf matrix bigNsurf = zeros(3,3*nnps,nqpts);for i=1:1:nqpts             for j=1:1:nnps             j3 = 3*j;      j2 = j3-1;      j1 = j3-2;        bigNsurf(1,j1,i) = ssfac(j,i);      bigNsurf(2,j2,i) = ssfac(j,i);      bigNsurf(3,j3,i) = ssfac(j,i);        end   end 
