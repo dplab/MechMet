@@ -35,6 +35,20 @@ y1 = 'y1';
 z0 = 'z0';
 z1 = 'z1';
 
+cut1 = 'cut1';
+cut2 = 'cut2';
+cut3 = 'cut3';
+cut4 = 'cut4';
+cut5 = 'cut5';
+cut6 = 'cut6';
+
+nse_1 = 0;
+nse_2 = 0;
+nse_3 = 0;
+nse_4 = 0;
+nse_5 = 0;
+nse_6 = 0;
+
 element_count=0;
 phase_count = 1;
 meshfile = [fname,'.msh'];
@@ -95,7 +109,7 @@ while ~feof(fid)
            
        minmax_flag = convertCharsToStrings(fgetl(fid));   
       
-       if(minmax_flag == x0)           
+       if(minmax_flag == x0 | minmax_flag == cut1 )           
        nse_1 = str2num(fgetl(fid)) ;
 %       np_tmp1 = zeros(nse_1,7);
        nps_1 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_1);
@@ -103,7 +117,7 @@ while ~feof(fid)
        dum = fgetl(fid);
        end
        
-       if(minmax_flag == x1)
+       if(minmax_flag == x1 | minmax_flag == cut2)
        nse_2 = str2num(fgetl(fid)) ;
 %       np_tmp2 = zeros(nse_2,7);
        nps_2 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_2);
@@ -111,7 +125,7 @@ while ~feof(fid)
        dum = fgetl(fid);
        end
        
-       if(minmax_flag == y0)
+       if(minmax_flag == y0 | minmax_flag == cut3)
        nse_3 = str2num(fgetl(fid)) ;
 %       np_tmp3 = zeros(nse_3,7);
        nps_3 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_3);
@@ -119,7 +133,7 @@ while ~feof(fid)
        dum = fgetl(fid);
        end
        
-       if(minmax_flag == y1)
+       if(minmax_flag == y1 | minmax_flag == cut4)
        nse_4 = str2num(fgetl(fid)) ;
 %       np_tmp4 = zeros(nse_4,7);
        nps_4 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_4);
@@ -127,7 +141,7 @@ while ~feof(fid)
        dum = fgetl(fid);
        end
              
-       if(minmax_flag == z0)        
+       if(minmax_flag == z0 | minmax_flag == cut5)        
        nse_5 = str2num(fgetl(fid)) ;
 %       np_tmp5 = zeros(nse_5,7);
        nps_5 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_5);
@@ -135,7 +149,7 @@ while ~feof(fid)
        dum = fgetl(fid);
        end
        
-       if(minmax_flag == z1)              
+       if(minmax_flag == z1 | minmax_flag == cut6)              
        nse_6 = str2num(fgetl(fid)) ;
 %       np_tmp6 = zeros(nse_6,7);
        nps_6 = fscanf(fid, '%d %d %d %d %d %d %d', 7*nse_6);
@@ -176,12 +190,28 @@ rotations  = RMatOfQuat(quaterions);
 meshfile = MeshStructure(crd, con', [], 'ElementType', 'tets:10');
 meshfile.name = [fname '_mesh'];
 
-meshfile.nps_1 = nps_1;
-meshfile.nps_2 = nps_2;
-meshfile.nps_3 = nps_3;
-meshfile.nps_4 = nps_4;
-meshfile.nps_5 = nps_5;
-meshfile.nps_6 = nps_6;
+nps_sizes = [nse_1 nse_2 nse_3 nse_4 nse_5 nse_6];
+
+meshfile.nps_sizes = nps_sizes;
+
+if(nse_1~=0) 
+    meshfile.nps_1 = nps_1;
+end
+if(nse_2~=0) 
+    meshfile.nps_2 = nps_2;
+end
+if(nse_3~=0) 
+    meshfile.nps_3 = nps_3;
+end
+if(nse_4~=0) 
+    meshfile.nps_4 = nps_4;
+end
+if(nse_5~=0) 
+    meshfile.nps_5 = nps_5;
+end
+if(nse_6~=0) 
+    meshfile.nps_6 = nps_6;
+end
 
 microstructurefile = MicrostructureStructure(grains(2,:),grains(1,:),orientations,rotations);
 microstructurefile.name = [fname '_micro'];
