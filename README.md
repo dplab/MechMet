@@ -3,7 +3,7 @@ MatLab code for computing mechanical metrics of polycrystals from 3D volume mesh
 
 The MechMet code was built in the Cornell Deformation Lab primarily by Paul Dawson. A forthcoming paper has been submitted, which details the use of the MechMet code, some examples, and the metrics described here. The manuscript DOI and citable text will be updated and listed here upon acceptance of the manuscript.
 
-_"Mechanical Metrics of Virtual Polycrystals (MechMet), P.R. Dawson, M.P. Echlin, M.P. Miller, T.M. Pollock, J. Wendorf, L.H. Mills, J.C. Stinville, M.A. Charpagne, submitted, 2021"_
+_"Mechanical Metrics of Virtual Polycrystals (MechMet), P.R. Dawson, M.P. Echlin, M.P. Miller, T.M. Pollock, J. Wendorf, L.H. Mills, J.C. Stinville, M.A. Charpagne, Integr. Mater. Manuf. Innov. 10, 265–285 (2021). https://doi.org/10.1007/s40192-021-00206-7"_
 
 MechMet computes the following metrics:
 
